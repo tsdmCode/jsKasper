@@ -11,6 +11,11 @@ function submitForm(event) {
   const firstName = event.target.firstname;
   const lastName = event.target.lastname;
   const address = event.target.address;
+  const zipcode = event.target.zipcode;
+  const country = event.target.country;
+  const email = event.target.email;
+  const password = event.target.password;
+  const passwordRepeat = event.target.passwordRepeat;
 
   if (firstName.value.length < 2) {
     setErrorMessage(firstName, 'Fornavn skal være på mere end et bogstav');
@@ -30,8 +35,35 @@ function submitForm(event) {
     setErrorMessage(firstName, 'Din addresse er for mærkelig, DUDE!');
   }
 
+  if (zipcode.value.length != 4) {
+    setErrorMessage(zipcode, '4 cifre, mange tak!');
+  }
+
+  if (country.value.length < 3) {
+    setErrorMessage(country, 'Landenavne skal være på 3 bogstaver eller mere');
+  } else if (noSpecialSignsRegex.test(country.value)) {
+    setErrorMessage(country, 'Dit land er for mærkeligt, DUDE!');
+  }
+
+  if (!emailRegex.test(email.value)) {
+    setErrorMessage(email, 'Indtast en gyldig e-mail!');
+  }
+
+  //pw
+  if (password.value.length < 6) {
+    setErrorMessage(password, 'Password skal være længere end 6');
+  }
+
+  if (!noSpecialSignsRegex.test(password.value)) {
+    setErrorMessage(password, 'Password skal have mindst en speciel karakter');
+  }
+  //pwrepeat
+  if (password.value !== passwordRepeat.value) {
+    setErrorMessage(passwordRepeat, 'Dit password matcher ikke');
+  }
+
   if (!hasErrors) {
-    alert('Tillykke du har indsent formen');
+    alert('Tillykke du har indsendt formen');
   }
 }
 
